@@ -234,8 +234,11 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-const { Entries, Entry, Archive } = nativeBinding
+const { Entries, Entry, EntryType, Header, ReadonlyHeader, Archive } = nativeBinding
 
 module.exports.Entries = Entries
 module.exports.Entry = Entry
+module.exports.EntryType = EntryType
+module.exports.Header = Header
+module.exports.ReadonlyHeader = ReadonlyHeader
 module.exports.Archive = Archive
