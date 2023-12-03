@@ -5,6 +5,7 @@ use std::{
   io::{Cursor, Read},
 };
 
+use mimalloc::MiMalloc;
 use napi::{
   bindgen_prelude::{Env, Reference},
   Either, JsBuffer,
@@ -15,6 +16,9 @@ use crate::entry::Entries;
 
 mod entry;
 mod header;
+
+#[global_allocator]
+static GLOBAL: MiMalloc = MiMalloc;
 
 pub struct ArchiveSource {
   inner: Either<File, Cursor<Vec<u8>>>,
