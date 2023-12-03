@@ -20,7 +20,7 @@ impl Generator for Entries {
     let entry = self
       .inner
       .next()?
-      .map(|entry| crate::entry::Entry::new(entry))
+      .map(crate::entry::Entry::new)
       .ok()?;
     Some(entry)
   }
