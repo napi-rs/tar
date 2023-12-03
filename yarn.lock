@@ -146,11 +146,233 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@napi-rs/cross-toolchain-arm64-target-aarch64@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "@napi-rs/cross-toolchain-arm64-target-aarch64@npm:0.0.9"
+  checksum: dbd931aa9165dac04d898eebb7878134bb5d69a89703561c3413dc7d5335683ac0c7ea04613144f2822f94bfd17b8aa1b28f9de4789267392ce29d5b65bcf573
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@napi-rs/cross-toolchain-arm64-target-armv7@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "@napi-rs/cross-toolchain-arm64-target-armv7@npm:0.0.9"
+  checksum: 9ccc5ade7a3be8deb018b700bee355aa3ed022de4d437e83192d02bc0002b365883e98c4b350adc324d1754173407c0d5efad5f6556b26e053169ec96bcafe8a
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@napi-rs/cross-toolchain-arm64-target-x86_64@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "@napi-rs/cross-toolchain-arm64-target-x86_64@npm:0.0.9"
+  checksum: e76fa83fa8ef7029a2963a258b7fd2e45b7d0634582544a77d87e3960f429681199d402b34a158ea36b058014015445b8611a7412ed626df06f690d12a460af2
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@napi-rs/cross-toolchain-x64-target-aarch64@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "@napi-rs/cross-toolchain-x64-target-aarch64@npm:0.0.9"
+  checksum: 0f0e1a977f0a7e0db696db2ff7e9ec802ad3e3bb47dc3c94ebd6b40b4a6688bdd930ecd74023d89aa24e2b89c9f78064aaba7b8a7df2e007d040bc85a3aa5fe0
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@napi-rs/cross-toolchain-x64-target-armv7@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "@napi-rs/cross-toolchain-x64-target-armv7@npm:0.0.9"
+  checksum: a260f9cdff12d9322ae88f57b32d375bf0eec1102d6019c220bf7adb90ba8875e233cf718f6cd6db840c5cdb2be8c358669751548329664414c9d8835adb6a00
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@napi-rs/cross-toolchain-x64-target-x86_64@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "@napi-rs/cross-toolchain-x64-target-x86_64@npm:0.0.9"
+  checksum: ff24f7fde00b8dc03ab826e73eb0bcd545af8a62e2baa09a937275bd36a3d0a7dfc4a0590ea9658ead1314c1f2877bcd6cce144b79d8a03b7f35dc243534e2d6
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@napi-rs/cross-toolchain@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "@napi-rs/cross-toolchain@npm:0.0.9"
+  peerDependencies:
+    "@napi-rs/cross-toolchain-arm64-target-aarch64": ^0.0.9
+    "@napi-rs/cross-toolchain-arm64-target-armv7": ^0.0.9
+    "@napi-rs/cross-toolchain-arm64-target-x86_64": ^0.0.9
+    "@napi-rs/cross-toolchain-x64-target-aarch64": ^0.0.9
+    "@napi-rs/cross-toolchain-x64-target-armv7": ^0.0.9
+    "@napi-rs/cross-toolchain-x64-target-x86_64": ^0.0.9
+  peerDependenciesMeta:
+    "@napi-rs/cross-toolchain-arm64-target-aarch64":
+      optional: true
+    "@napi-rs/cross-toolchain-arm64-target-armv7":
+      optional: true
+    "@napi-rs/cross-toolchain-arm64-target-x86_64":
+      optional: true
+    "@napi-rs/cross-toolchain-x64-target-aarch64":
+      optional: true
+    "@napi-rs/cross-toolchain-x64-target-armv7":
+      optional: true
+    "@napi-rs/cross-toolchain-x64-target-x86_64":
+      optional: true
+  conditions: os=linux & (cpu=x64 | cpu=arm64) & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-android-arm-eabi@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-android-arm-eabi@npm:1.1.2"
+  conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-android-arm64@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-android-arm64@npm:1.1.2"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-darwin-arm64@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-darwin-arm64@npm:1.1.2"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-darwin-x64@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-darwin-x64@npm:1.1.2"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-freebsd-x64@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-freebsd-x64@npm:1.1.2"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-linux-arm-gnueabihf@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-linux-arm-gnueabihf@npm:1.1.2"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-linux-arm64-gnu@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-linux-arm64-gnu@npm:1.1.2"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-linux-arm64-musl@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-linux-arm64-musl@npm:1.1.2"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-linux-x64-gnu@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-linux-x64-gnu@npm:1.1.2"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-linux-x64-musl@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-linux-x64-musl@npm:1.1.2"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-win32-arm64-msvc@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-win32-arm64-msvc@npm:1.1.2"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-win32-ia32-msvc@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-win32-ia32-msvc@npm:1.1.2"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma-win32-x64-msvc@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma-win32-x64-msvc@npm:1.1.2"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@napi-rs/lzma@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@napi-rs/lzma@npm:1.1.2"
+  dependencies:
+    "@napi-rs/lzma-android-arm-eabi": "npm:1.1.2"
+    "@napi-rs/lzma-android-arm64": "npm:1.1.2"
+    "@napi-rs/lzma-darwin-arm64": "npm:1.1.2"
+    "@napi-rs/lzma-darwin-x64": "npm:1.1.2"
+    "@napi-rs/lzma-freebsd-x64": "npm:1.1.2"
+    "@napi-rs/lzma-linux-arm-gnueabihf": "npm:1.1.2"
+    "@napi-rs/lzma-linux-arm64-gnu": "npm:1.1.2"
+    "@napi-rs/lzma-linux-arm64-musl": "npm:1.1.2"
+    "@napi-rs/lzma-linux-x64-gnu": "npm:1.1.2"
+    "@napi-rs/lzma-linux-x64-musl": "npm:1.1.2"
+    "@napi-rs/lzma-win32-arm64-msvc": "npm:1.1.2"
+    "@napi-rs/lzma-win32-ia32-msvc": "npm:1.1.2"
+    "@napi-rs/lzma-win32-x64-msvc": "npm:1.1.2"
+  dependenciesMeta:
+    "@napi-rs/lzma-android-arm-eabi":
+      optional: true
+    "@napi-rs/lzma-android-arm64":
+      optional: true
+    "@napi-rs/lzma-darwin-arm64":
+      optional: true
+    "@napi-rs/lzma-darwin-x64":
+      optional: true
+    "@napi-rs/lzma-freebsd-x64":
+      optional: true
+    "@napi-rs/lzma-linux-arm-gnueabihf":
+      optional: true
+    "@napi-rs/lzma-linux-arm64-gnu":
+      optional: true
+    "@napi-rs/lzma-linux-arm64-musl":
+      optional: true
+    "@napi-rs/lzma-linux-x64-gnu":
+      optional: true
+    "@napi-rs/lzma-linux-x64-musl":
+      optional: true
+    "@napi-rs/lzma-win32-arm64-msvc":
+      optional: true
+    "@napi-rs/lzma-win32-ia32-msvc":
+      optional: true
+    "@napi-rs/lzma-win32-x64-msvc":
+      optional: true
+  checksum: 155ba13bb9352a1e458b9af42ac8521a65b3bc0629332cdf47291cc45dfd56452c4fe9f387dc538f58cd72b0fface7b663656eb71ca4ff42d7e50607dc190d04
+  languageName: node
+  linkType: hard
+
 "@napi-rs/tar@workspace:.":
   version: 0.0.0-use.local
   resolution: "@napi-rs/tar@workspace:."
   dependencies:
     "@napi-rs/cli": "npm:^2.16.4"
+    "@napi-rs/cross-toolchain": "npm:^0.0.9"
+    "@napi-rs/cross-toolchain-arm64-target-aarch64": "npm:^0.0.9"
+    "@napi-rs/cross-toolchain-arm64-target-armv7": "npm:^0.0.9"
+    "@napi-rs/cross-toolchain-arm64-target-x86_64": "npm:^0.0.9"
+    "@napi-rs/cross-toolchain-x64-target-aarch64": "npm:^0.0.9"
+    "@napi-rs/cross-toolchain-x64-target-armv7": "npm:^0.0.9"
+    "@napi-rs/cross-toolchain-x64-target-x86_64": "npm:^0.0.9"
+    "@napi-rs/lzma": "npm:^1.1.2"
     "@swc-node/register": "npm:^1.6.8"
     "@swc/core": "npm:^1.3.95"
     "@taplo/cli": "npm:^0.5.2"
