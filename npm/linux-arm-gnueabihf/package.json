@@ -1,17 +1,17 @@
 {
-  "name": "@napi-rs/package-template-linux-arm-gnueabihf",
-  "version": "1.0.0",
+  "name": "@napi-rs/tar-linux-arm-gnueabihf",
+  "version": "0.0.0",
   "os": [
     "linux"
   ],
   "cpu": [
     "arm"
   ],
-  "main": "package-template.linux-arm-gnueabihf.node",
+  "main": "tar.linux-arm-gnueabihf.node",
   "files": [
-    "package-template.linux-arm-gnueabihf.node"
+    "tar.linux-arm-gnueabihf.node"
   ],
-  "description": "Template project for writing node package with napi-rs",
+  "description": "Node.js tar binding https://docs.rs/tar/latest/tar/",
   "keywords": [
     "napi-rs",
     "NAPI",
@@ -28,5 +28,5 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "repository": "git@github.com:napi-rs/package-template.git"
+  "repository": "git@github.com:napi-rs/tar.git"
 }

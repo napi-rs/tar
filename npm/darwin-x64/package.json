@@ -1,17 +1,17 @@
 {
-  "name": "@napi-rs/package-template-darwin-x64",
-  "version": "1.0.0",
+  "name": "@napi-rs/tar-darwin-x64",
+  "version": "0.0.0",
   "os": [
     "darwin"
   ],
   "cpu": [
     "x64"
   ],
-  "main": "package-template.darwin-x64.node",
+  "main": "tar.darwin-x64.node",
   "files": [
-    "package-template.darwin-x64.node"
+    "tar.darwin-x64.node"
   ],
-  "description": "Template project for writing node package with napi-rs",
+  "description": "Node.js tar binding https://docs.rs/tar/latest/tar/",
   "keywords": [
     "napi-rs",
     "NAPI",
@@ -28,5 +28,5 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "repository": "git@github.com:napi-rs/package-template.git"
+  "repository": "git@github.com:napi-rs/tar.git"
 }

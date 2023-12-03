@@ -1,8 +1,18 @@
+import { join } from 'node:path'
+
 import test from 'ava'
 
-import { plus100 } from '../index'
+import { Archive } from '../index'
 
-test('sync function from native code', (t) => {
-  const fixture = 42
-  t.is(plus100(fixture), fixture + 100)
+test('should be able to read archive', (t) => {
+  const archive = new Archive(join(__dirname, 'src.tar'))
+  for (const entry of archive.entries()) {
+    t.is(typeof entry.path(), 'string')
+  }
+})
+
+test('should be able to unpack archive', (t) => {
+  const archive = new Archive(join(__dirname, 'src.tar'))
+  archive.unpack(__dirname)
+  t.pass()
 })

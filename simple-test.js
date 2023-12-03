@@ -1,5 +1,9 @@
-const { plus100 } = require('./index')
+const { Archive } = require('./index')
 
-console.assert(plus100(0) === 100, 'Simple test failed')
+const archive = new Archive(__dirname + '/__test__/src.tar')
+
+for (const entry of archive.entries()) {
+  console.info(entry.path())
+}
 
 console.info('Simple test passed')
