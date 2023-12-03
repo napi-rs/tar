@@ -127,3 +127,5 @@ Cargo.lock
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+x86_64-unknown-linux-gnu
