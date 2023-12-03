@@ -1,21 +1,33 @@
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+
 import b from 'benny'
+import { list } from 'tar'
 
-import { plus100 } from '../index'
+import { Archive } from '../index'
 
-function add(a: number) {
-  return a + 100
-}
+const ARCHIVE_PATH = join(__dirname, '..', '__test__', 'src.tar')
 
 async function run() {
   await b.suite(
-    'Add 100',
+    'Read all entries',
 
-    b.add('Native a + 100', () => {
-      plus100(10)
+    b.add('@napi-rs/tar', () => {
+      const archiveBuffer = readFileSync(ARCHIVE_PATH)
+      const archive = new Archive(archiveBuffer)
+      for (const entry of archive.entries()) {
+        entry.path()
+      }
     }),
 
-    b.add('JavaScript a + 100', () => {
-      add(10)
+    b.add('node-tar', () => {
+      list({
+        file: join(__dirname, '..', '__test__', 'src.tar'),
+        onentry: (entry) => {
+          entry.path
+        },
+        sync: true,
+      })
     }),
 
     b.cycle(),
