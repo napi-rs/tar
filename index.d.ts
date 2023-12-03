@@ -349,7 +349,7 @@ export class ReadonlyHeader {
 }
 export class Archive {
   /** Create a new archive with the underlying path. */
-  constructor(path: string)
+  constructor(input: string | Buffer)
   entries(): Entries
   /**
    * Unpacks the contents tarball into the specified `dst`.

@@ -1,16 +1,14 @@
-use std::fs::File;
-
 use napi::bindgen_prelude::Reference;
 use napi::Env;
 use napi::{bindgen_prelude::SharedReference, iterator::Generator};
 use napi_derive::napi;
 
 use crate::header::ReadonlyHeader;
-use crate::Archive;
+use crate::{Archive, ArchiveSource};
 
 #[napi(iterator)]
 pub struct Entries {
-  pub(crate) inner: SharedReference<Archive, tar::Entries<'static, File>>,
+  pub(crate) inner: SharedReference<Archive, tar::Entries<'static, ArchiveSource>>,
 }
 
 #[napi]
@@ -27,12 +25,12 @@ impl Generator for Entries {
 
 #[napi]
 pub struct Entry {
-  inner: tar::Entry<'static, File>,
+  inner: tar::Entry<'static, ArchiveSource>,
 }
 
 #[napi]
 impl Entry {
-  pub fn new(inner: tar::Entry<'static, File>) -> Self {
+  pub fn new(inner: tar::Entry<'static, ArchiveSource>) -> Self {
     Self { inner }
   }
 
