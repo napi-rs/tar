@@ -1,37 +1,70 @@
 #![deny(clippy::all)]
 
-use std::fs::File;
+use std::{
+  fs::File,
+  io::{Cursor, Read},
+};
 
-use napi::bindgen_prelude::{Env, Reference};
+use napi::{
+  bindgen_prelude::{Env, Reference},
+  Either, JsBuffer,
+};
 use napi_derive::napi;
+
+use crate::entry::Entries;
 
 mod entry;
 mod header;
 
+pub struct ArchiveSource {
+  inner: Either<File, Cursor<Vec<u8>>>,
+}
+
+impl ArchiveSource {
+  fn from_node_input(input: Either<String, JsBuffer>) -> Result<Self, napi::Error> {
+    match input {
+      Either::A(path) => {
+        let file = File::open(path)?;
+        Ok(Self {
+          inner: Either::A(file),
+        })
+      }
+      Either::B(buffer) => Ok(Self {
+        inner: Either::B(Cursor::new(buffer.into_value()?.to_vec())),
+      }),
+    }
+  }
+}
+
+impl Read for ArchiveSource {
+  fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
+    match &mut self.inner {
+      Either::A(file) => file.read(buf),
+      Either::B(buffer) => buffer.read(buf),
+    }
+  }
+}
+
 #[napi]
 pub struct Archive {
-  inner: tar::Archive<File>,
+  inner: tar::Archive<ArchiveSource>,
 }
 
 #[napi]
 impl Archive {
   #[napi(constructor)]
   /// Create a new archive with the underlying path.
-  pub fn new(path: String) -> napi::Result<Self> {
-    let file = File::open(path)?;
-    let inner = tar::Archive::new(file);
-    Ok(Self { inner })
+  pub fn new(input: Either<String, JsBuffer>) -> napi::Result<Self> {
+    Ok(Self {
+      inner: tar::Archive::new(ArchiveSource::from_node_input(input)?),
+    })
   }
 
   #[napi]
-  pub fn entries(
-    &mut self,
-    this: Reference<Archive>,
-    env: Env,
-  ) -> napi::Result<crate::entry::Entries> {
+  pub fn entries(&mut self, this: Reference<Archive>, env: Env) -> napi::Result<Entries> {
     let entries = this.share_with(env, |archive| Ok(archive.inner.entries()?))?;
 
-    Ok(crate::entry::Entries { inner: entries })
+    Ok(Entries { inner: entries })
   }
 
   #[napi]
