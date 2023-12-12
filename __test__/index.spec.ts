@@ -25,3 +25,24 @@ test('should be able to create archive from Buffer', async (t) => {
     t.is(typeof entry.path(), 'string')
   }
 })
+
+test('should be able to handle tar.gz', (t) => {
+  const archive = new Archive(join(__dirname, 'src.tar.gz'))
+  for (const entry of archive.entries()) {
+    t.is(typeof entry.path(), 'string')
+  }
+})
+
+test('should be able to handle tar.bz2', (t) => {
+  const archive = new Archive(join(__dirname, 'src.tar.bz2'))
+  for (const entry of archive.entries()) {
+    t.is(typeof entry.path(), 'string')
+  }
+})
+
+test('should be able to handle tar.xz', (t) => {
+  const archive = new Archive(join(__dirname, 'src.tar.xz'))
+  for (const entry of archive.entries()) {
+    t.is(typeof entry.path(), 'string')
+  }
+})
