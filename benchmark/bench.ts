@@ -6,7 +6,21 @@ import { list } from 'tar'
 
 import { Archive } from '../index'
 
-const ARCHIVE_PATH = join(__dirname, '..', '__test__', 'src.tar')
+const ARCHIVE_PATH = join(__dirname, '..', '__test__', 'src.tar.gz')
+
+list({
+  file: join(__dirname, '..', '__test__', 'src.tar.gz'),
+  onentry: (entry) => {
+    console.info('list from node-tar', entry.path)
+  },
+  sync: true,
+})
+
+const archiveBuffer = readFileSync(ARCHIVE_PATH)
+const archive = new Archive(archiveBuffer)
+for (const entry of archive.entries()) {
+  console.info('list from @napi-rs/tar', entry.path())
+}
 
 async function run() {
   await b.suite(
@@ -22,7 +36,7 @@ async function run() {
 
     b.add('node-tar', () => {
       list({
-        file: join(__dirname, '..', '__test__', 'src.tar'),
+        file: join(__dirname, '..', '__test__', 'src.tar.gz'),
         onentry: (entry) => {
           entry.path
         },

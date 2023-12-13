@@ -420,5 +420,6 @@ export const enum EntryType {
   /** Global extended header */
   XGlobalHeader = 11,
   /** Extended Header */
-  XHeader = 12,
+  XHeader = 12
 }
+
