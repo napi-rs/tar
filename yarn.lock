@@ -151,9 +151,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@napi-rs/cli@npm:^3.0.0-alpha.13":
-  version: 3.0.0-alpha.13
-  resolution: "@napi-rs/cli@npm:3.0.0-alpha.13"
+"@napi-rs/cli@npm:^3.0.0-alpha.19":
+  version: 3.0.0-alpha.19
+  resolution: "@napi-rs/cli@npm:3.0.0-alpha.19"
   dependencies:
     "@napi-rs/cross-toolchain": "npm:^0.0.12"
     "@octokit/rest": "npm:^20.0.2"
@@ -181,7 +181,7 @@ __metadata:
   bin:
     napi: dist/cli.js
     napi-raw: cli.mjs
-  checksum: d769750bfd7d504c1602f8b803b2bcd6aeecb091e701ea3950f6216ded323b48c8d06df0aed2fb9a581fb169b634cebf992204cf3be4640512c296fd02310b23
+  checksum: 10780c474887bd442dfdf220479ec87b57a2c2fca6e3057143ac5e315e974ef30bbbf4a2e65e2f7c153dd88284bc60a09455c6d294d8470f20a5b5450bc75efb
   languageName: node
   linkType: hard
 
@@ -494,11 +494,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@napi-rs/tar@npm:^0.0.1, @napi-rs/tar@workspace:.":
+"@napi-rs/tar@workspace:*, @napi-rs/tar@workspace:.":
   version: 0.0.0-use.local
   resolution: "@napi-rs/tar@workspace:."
   dependencies:
-    "@napi-rs/cli": "npm:^3.0.0-alpha.13"
+    "@napi-rs/cli": "npm:^3.0.0-alpha.19"
     "@napi-rs/cross-toolchain": "npm:^0.0.12"
     "@napi-rs/lzma": "npm:^1.1.2"
     "@swc-node/register": "npm:^1.6.8"
