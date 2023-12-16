@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@napi-rs/cli": "^3.0.0-alpha.19",
-    "@napi-rs/cross-toolchain": "^0.0.12",
+    "@napi-rs/cross-toolchain": "^0.0.14",
     "@napi-rs/lzma": "^1.1.2",
     "@swc-node/register": "^1.6.8",
     "@swc/core": "^1.3.95",

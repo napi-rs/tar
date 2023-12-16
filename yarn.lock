@@ -216,6 +216,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@napi-rs/cross-toolchain@npm:^0.0.14":
+  version: 0.0.14
+  resolution: "@napi-rs/cross-toolchain@npm:0.0.14"
+  dependencies:
+    "@napi-rs/lzma": "npm:^1.2.1"
+    "@napi-rs/tar": "npm:^0.1.0"
+    debug: "npm:^4.3.4"
+  peerDependencies:
+    "@napi-rs/cross-toolchain-arm64-target-aarch64": ^0.0.14
+    "@napi-rs/cross-toolchain-arm64-target-armv7": ^0.0.14
+    "@napi-rs/cross-toolchain-arm64-target-x86_64": ^0.0.14
+    "@napi-rs/cross-toolchain-x64-target-aarch64": ^0.0.14
+    "@napi-rs/cross-toolchain-x64-target-armv7": ^0.0.14
+    "@napi-rs/cross-toolchain-x64-target-x86_64": ^0.0.14
+  peerDependenciesMeta:
+    "@napi-rs/cross-toolchain-arm64-target-aarch64":
+      optional: true
+    "@napi-rs/cross-toolchain-arm64-target-armv7":
+      optional: true
+    "@napi-rs/cross-toolchain-arm64-target-x86_64":
+      optional: true
+    "@napi-rs/cross-toolchain-x64-target-aarch64":
+      optional: true
+    "@napi-rs/cross-toolchain-x64-target-armv7":
+      optional: true
+    "@napi-rs/cross-toolchain-x64-target-x86_64":
+      optional: true
+  checksum: 177f126e2324af95e76b88b9ebfcf562659ccfdbb2fe2ee6bfe2079ab3a5d573f5df62e9c065bfbd31cda834fefb38d72ca92cafee759f74a33298266592c72a
+  languageName: node
+  linkType: hard
+
 "@napi-rs/lzma-android-arm-eabi@npm:1.1.2":
   version: 1.1.2
   resolution: "@napi-rs/lzma-android-arm-eabi@npm:1.1.2"
@@ -499,7 +530,7 @@ __metadata:
   resolution: "@napi-rs/tar@workspace:."
   dependencies:
     "@napi-rs/cli": "npm:^3.0.0-alpha.19"
-    "@napi-rs/cross-toolchain": "npm:^0.0.12"
+    "@napi-rs/cross-toolchain": "npm:^0.0.14"
     "@napi-rs/lzma": "npm:^1.1.2"
     "@swc-node/register": "npm:^1.6.8"
     "@swc/core": "npm:^1.3.95"
