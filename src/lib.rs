@@ -5,7 +5,6 @@ use std::{
   io::{BufReader, Cursor, Read},
 };
 
-use mimalloc::MiMalloc;
 use napi::{
   bindgen_prelude::{Either4, Env, Reference},
   Either, JsBuffer,
@@ -17,8 +16,9 @@ use crate::entry::Entries;
 mod entry;
 mod header;
 
+#[cfg(not(target_family = "wasm"))]
 #[global_allocator]
-static GLOBAL: MiMalloc = MiMalloc;
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 pub struct ArchiveSource {
   inner: Either4<
