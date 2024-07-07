@@ -14,7 +14,7 @@ anyhow = "1"
 bzip2 = "0.4"
 flate2 = "1"
 lzma-rs = { version = "0.3", features = ["stream"] }
-infer = "0.15"
+infer = "0.16"
 napi        = { version = "2", features = ["anyhow", "napi6"] }
 napi-derive = "2"
 tar = "0.4"
