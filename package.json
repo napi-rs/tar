@@ -17,7 +17,11 @@
   "files": [
     "index.d.ts",
     "index.js",
-    "browser.js"
+    "browser.js",
+    "tar.wasi.cjs",
+    "tar.wasi-browser.js",
+    "wasi-worker-browser.mjs",
+    "wasi-worker.mjs"
   ],
   "napi": {
     "binaryName": "tar",
@@ -60,7 +64,7 @@
     "version": "napi version"
   },
   "devDependencies": {
-    "@napi-rs/cli": "^3.0.0-alpha.54",
+    "@napi-rs/cli": "^3.0.0-alpha.60",
     "@napi-rs/lzma": "^1.3.0",
     "@swc-node/register": "^1.9.0",
     "@swc/core": "^1.4.17",
