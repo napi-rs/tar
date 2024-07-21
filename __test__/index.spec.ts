@@ -4,6 +4,9 @@ import { join } from 'node:path'
 import test from 'ava'
 
 import { Archive } from '../index'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = join(fileURLToPath(import.meta.url), '..')
 
 test('should be able to read archive', (t) => {
   const archive = new Archive(join(__dirname, 'src.tar'))
