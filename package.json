@@ -73,7 +73,7 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "npm-run-all2": "^7.0.0",
-    "oxlint": "^0.11.0",
+    "oxlint": "^0.12.0",
     "prettier": "^3.2.5",
     "tar": "^7.0.1",
     "tinybench": "^3.0.0",
