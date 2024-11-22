@@ -73,7 +73,7 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "npm-run-all2": "^7.0.0",
-    "oxlint": "^0.12.0",
+    "oxlint": "^0.13.0",
     "prettier": "^3.2.5",
     "tar": "^7.0.1",
     "tinybench": "^3.0.0",
@@ -111,7 +111,7 @@
     "singleQuote": true,
     "arrowParens": "always"
   },
-  "packageManager": "yarn@4.5.1",
+  "packageManager": "yarn@4.5.2",
   "resolutions": {
     "@napi-rs/tar": "workspace:*"
   }
