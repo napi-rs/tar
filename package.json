@@ -111,7 +111,7 @@
     "singleQuote": true,
     "arrowParens": "always"
   },
-  "packageManager": "yarn@4.5.2",
+  "packageManager": "yarn@4.5.3",
   "resolutions": {
     "@napi-rs/tar": "workspace:*"
   }
