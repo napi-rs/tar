@@ -11,7 +11,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 anyhow      = "1"
-bzip2       = "0.4"
+bzip2       = "0.5"
 flate2      = "1"
 infer       = "0.16"
 lzma-rs     = { version = "0.3", features = ["stream"] }
