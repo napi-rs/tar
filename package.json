@@ -76,7 +76,7 @@
     "oxlint": "^0.16.0",
     "prettier": "^3.4.1",
     "tar": "^7.4.3",
-    "tinybench": "^3.0.7",
+    "tinybench": "^4.0.0",
     "typescript": "^5.7.2"
   },
   "lint-staged": {
