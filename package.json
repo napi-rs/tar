@@ -64,7 +64,7 @@
   "devDependencies": {
     "@napi-rs/cli": "^3.0.0-alpha.62",
     "@napi-rs/lzma": "^1.4.1",
-    "@oxc-node/core": "^0.0.21",
+    "@oxc-node/core": "^0.0.22",
     "@taplo/cli": "^0.7.0",
     "@types/node": "^22.10.1",
     "@types/tar": "^6",
@@ -111,7 +111,7 @@
     "singleQuote": true,
     "arrowParens": "always"
   },
-  "packageManager": "yarn@4.7.0",
+  "packageManager": "yarn@4.9.0",
   "resolutions": {
     "@napi-rs/tar": "workspace:*"
   }
