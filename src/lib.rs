@@ -16,7 +16,7 @@ use crate::entry::Entries;
 mod entry;
 mod header;
 
-#[cfg(not(target_family = "wasm"))]
+#[cfg(all(not(target_family = "wasm"), not(target_arch = "x86")))]
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 

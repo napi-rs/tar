@@ -23,6 +23,34 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'yarn'
+
+      - name: Install
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: oxlint
+        run: yarn lint
+
+      - name: Cargo fmt
+        run: cargo fmt -- --check
+
+      - name: Clippy
+        run: cargo clippy
   build:
     strategy:
       fail-fast: false
@@ -35,9 +63,7 @@ jobs:
             build: yarn build --target x86_64-pc-windows-msvc
             target: x86_64-pc-windows-msvc
           - host: windows-latest
-            build: |
-              yarn build --target i686-pc-windows-msvc
-              yarn test
+            build: yarn build --target i686-pc-windows-msvc
             target: i686-pc-windows-msvc
           - host: ubuntu-latest
             target: x86_64-unknown-linux-gnu
@@ -81,9 +107,9 @@ jobs:
           - host: ubuntu-latest
             target: wasm32-wasip1-threads
             build: |
-              wget https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-22/wasi-sdk-22.0-linux.tar.gz
-              tar -xvf wasi-sdk-22.0-linux.tar.gz
-              export WASI_SDK_PATH="$(pwd)/wasi-sdk-22.0"
+              wget https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-25/wasi-sdk-25.0-x86_64-linux.tar.gz
+              tar -xvf wasi-sdk-25.0-x86_64-linux.tar.gz
+              export WASI_SDK_PATH="$(pwd)/wasi-sdk-25.0-x86_64-linux"
               yarn build --target wasm32-wasip1-threads
     name: stable - ${{ matrix.settings.target }} - node@20
     runs-on: ${{ matrix.settings.host }}
@@ -126,18 +152,8 @@ jobs:
         run: ${{ matrix.settings.setup }}
         if: ${{ matrix.settings.setup }}
         shell: bash
-      - name: Setup node x86
-        if: matrix.settings.target == 'i686-pc-windows-msvc'
-        run: yarn config set supportedArchitectures.cpu "ia32"
-        shell: bash
       - name: Install dependencies
         run: yarn install
-      - name: Setup node x86
-        uses: actions/setup-node@v4
-        if: matrix.settings.target == 'i686-pc-windows-msvc'
-        with:
-          node-version: 20
-          architecture: x86
       - name: Build
         run: ${{ matrix.settings.build }}
         shell: bash
@@ -186,6 +202,7 @@ jobs:
             freebsd-version
             yarn install
             yarn build
+            yarn test
             rm -rf node_modules
             rm -rf target
             rm -rf .yarn/cache
@@ -206,6 +223,12 @@ jobs:
           - host: windows-latest
             target: x86_64-pc-windows-msvc
             architecture: x64
+          - host: windows-latest
+            target: i686-pc-windows-msvc
+            architecture: x64
+          - host: windows-11-arm
+            target: aarch64-pc-windows-msvc
+            architecture: arm64
           - host: macos-latest
             target: x86_64-apple-darwin
             architecture: x64
@@ -213,8 +236,8 @@ jobs:
             target: aarch64-apple-darwin
             architecture: arm64
         node:
-          - '18'
           - '20'
+          - '22'
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v4
@@ -225,7 +248,19 @@ jobs:
           cache: yarn
           architecture: ${{ matrix.settings.architecture }}
       - name: Install dependencies
+        if: ${{ matrix.settings.target == 'i686-pc-windows-msvc' }}
+        run: |
+          yarn config set --json supportedArchitectures.cpu '["current", "ia32"]'
+          yarn install
+      - name: Install dependencies
+        if: ${{ matrix.settings.target != 'i686-pc-windows-msvc' }}
         run: yarn install
+      - name: Setup node
+        if: ${{ matrix.settings.target == 'i686-pc-windows-msvc' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          architecture: x86
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
@@ -252,15 +287,9 @@ jobs:
           - s390x-unknown-linux-gnu
           - powerpc64le-unknown-linux-gnu
         node:
-          - '18'
           - '20'
-        exclude:
-          # too slow
-          - target: aarch64-unknown-linux-gnu
-            node: '18'
-          - target: s390x-unknown-linux-gnu
-            node: '18'
-    runs-on: ubuntu-latest
+          - '22'
+    runs-on: ${{ contains(matrix.target, 'aarch64') && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
     steps:
       - uses: actions/checkout@v4
       - name: Setup node
@@ -306,12 +335,16 @@ jobs:
         run: ls -R .
         shell: bash
       - name: Set up QEMU
+        if: ${{ !contains(matrix.target, 'aarch64') }}
         uses: docker/setup-qemu-action@v3
         with:
           platforms: all
       - run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+        if: ${{ !contains(matrix.target, 'aarch64') }}
       - name: Test bindings
         uses: addnab/docker-run-action@v3
+        # Node.js on qemu randomly segfaults on powerpc64le
+        continue-on-error: ${{ matrix.target == 'powerpc64le-unknown-linux-gnu' }}
         with:
           image: ${{ steps.docker.outputs.IMAGE }}
           options: -v ${{ github.workspace }}:${{ github.workspace }} -w ${{ github.workspace }} --platform ${{ steps.docker.outputs.PLATFORM }}
@@ -325,8 +358,8 @@ jobs:
       fail-fast: false
       matrix:
         node:
-          - '18'
           - '20'
+          - '22'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -353,6 +386,7 @@ jobs:
     name: Publish
     runs-on: ubuntu-latest
     needs:
+      - lint
       - build-freebsd
       - test-macOS-windows-binding
       - test-linux-binding
@@ -362,7 +396,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: yarn
       - name: Install dependencies
         run: yarn install
