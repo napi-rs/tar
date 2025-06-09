@@ -64,7 +64,7 @@
   "devDependencies": {
     "@napi-rs/cli": "^3.0.0-alpha.62",
     "@napi-rs/lzma": "^1.4.1",
-    "@oxc-node/core": "^0.0.27",
+    "@oxc-node/core": "^0.0.28",
     "@taplo/cli": "^0.7.0",
     "@types/node": "^22.10.1",
     "@types/tar": "^6",
@@ -73,7 +73,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.0.0",
     "npm-run-all2": "^8.0.0",
-    "oxlint": "^0.17.0",
+    "oxlint": "^0.18.0",
     "prettier": "^3.4.1",
     "tar": "^7.4.3",
     "tinybench": "^4.0.0",
