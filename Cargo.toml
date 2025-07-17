@@ -15,8 +15,8 @@ bzip2       = "0.6"
 flate2      = "1"
 infer       = "0.19"
 lzma-rs     = { version = "0.3", features = ["stream"] }
-napi        = { version = "2", features = ["anyhow", "napi6"] }
-napi-derive = "2"
+napi        = { version = "3", features = ["anyhow", "napi6"] }
+napi-derive = "3"
 tar         = "0.4"
 
 [target.'cfg(all(not(target_os = "linux"), not(target_os = "freebsd"), not(target_arch = "x86"), not(target_family = "wasm")))'.dependencies]
