@@ -2,7 +2,7 @@
 /* eslint-disable */
 export declare class Archive {
   /** Create a new archive with the underlying path. */
-  constructor(input: string | Buffer)
+  constructor(input: string | Uint8Array)
   entries(): Entries
   /**
    * Unpacks the contents tarball into the specified `dst`.

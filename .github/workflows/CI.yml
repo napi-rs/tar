@@ -67,7 +67,7 @@ jobs:
             target: i686-pc-windows-msvc
           - host: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            build: CC=clang yarn build --target x86_64-unknown-linux-gnu --use-napi-cross
+            build: TARGET_CC=clang yarn build --target x86_64-unknown-linux-gnu --use-napi-cross
           - host: ubuntu-latest
             target: x86_64-unknown-linux-musl
             build: yarn build --target x86_64-unknown-linux-musl -x
@@ -76,10 +76,10 @@ jobs:
             build: yarn build --target aarch64-apple-darwin
           - host: ubuntu-latest
             target: aarch64-unknown-linux-gnu
-            build: CC=clang yarn build --target aarch64-unknown-linux-gnu --use-napi-cross
+            build: TARGET_CC=clang yarn build --target aarch64-unknown-linux-gnu --use-napi-cross
           - host: ubuntu-latest
             target: armv7-unknown-linux-gnueabihf
-            build: CC=clang yarn build --target armv7-unknown-linux-gnueabihf --use-napi-cross
+            build: TARGET_CC=clang yarn build --target armv7-unknown-linux-gnueabihf --use-napi-cross
           - host: ubuntu-latest
             target: aarch64-linux-android
             build: yarn build --target aarch64-linux-android
@@ -92,15 +92,16 @@ jobs:
           - host: ubuntu-latest
             target: powerpc64le-unknown-linux-gnu
             build: |
-              sudo apt-get update
-              sudo apt-get install -y gcc-powerpc64le-linux-gnu
-              yarn build --target powerpc64le-unknown-linux-gnu
+              export CC=clang
+              export TARGET_CC=clang
+              yarn build --target powerpc64le-unknown-linux-gnu --use-napi-cross
           - host: ubuntu-latest
             target: s390x-unknown-linux-gnu
             build: |
-              sudo apt-get update
-              sudo apt-get install -y gcc-s390x-linux-gnu
-              yarn build --target s390x-unknown-linux-gnu
+              export CC=clang
+              export TARGET_CC=clang
+              export CFLAGS="-fuse-ld=lld"
+              yarn build --target s390x-unknown-linux-gnu --use-napi-cross
           - host: windows-latest
             target: aarch64-pc-windows-msvc
             build: yarn build --target aarch64-pc-windows-msvc
@@ -111,7 +112,7 @@ jobs:
               tar -xvf wasi-sdk-25.0-x86_64-linux.tar.gz
               export WASI_SDK_PATH="$(pwd)/wasi-sdk-25.0-x86_64-linux"
               yarn build --target wasm32-wasip1-threads
-    name: stable - ${{ matrix.settings.target }} - node@20
+    name: stable - ${{ matrix.settings.target }} - node@22
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v4
@@ -119,7 +120,7 @@ jobs:
         uses: actions/setup-node@v4
         if: ${{ !matrix.settings.docker }}
         with:
-          node-version: 20
+          node-version: 22
           cache: yarn
       - name: Download tar.node
         if: ${{ matrix.settings.host == 'ubuntu-latest' }}
@@ -140,7 +141,7 @@ jobs:
       - uses: goto-bus-stop/setup-zig@v2
         if: ${{ contains(matrix.settings.target, 'musl') }}
         with:
-          version: 0.13.0
+          version: 0.14.1
       - name: Install cargo-zigbuild
         uses: taiki-e/install-action@v2
         if: ${{ contains(matrix.settings.target, 'musl') }}
@@ -172,7 +173,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build
         id: build
-        uses: cross-platform-actions/action@v0.28.0
+        uses: cross-platform-actions/action@v0.29.0
         env:
           DEBUG: napi:*
           RUSTUP_IO_THREADS: 1
@@ -184,7 +185,7 @@ jobs:
           environment_variables: DEBUG RUSTUP_IO_THREADS
           shell: bash
           run: |
-            sudo pkg install -y -f curl node libnghttp2 npm
+            sudo pkg install -y -f curl node libnghttp2 npm cmake
             sudo npm install -g yarn --ignore-scripts
             curl https://sh.rustup.rs -sSf --output rustup.sh
             sh rustup.sh -y --profile minimal --default-toolchain beta
