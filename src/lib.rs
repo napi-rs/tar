@@ -5,10 +5,7 @@ use std::{
   io::{BufReader, Cursor, Read},
 };
 
-use napi::{
-  bindgen_prelude::{Either4, Env, Reference},
-  Either, JsBuffer,
-};
+use napi::bindgen_prelude::{Either, Either4, Env, Reference};
 use napi_derive::napi;
 
 use crate::entry::Entries;
@@ -18,7 +15,7 @@ mod header;
 
 #[cfg(all(not(target_family = "wasm"), not(target_arch = "x86")))]
 #[global_allocator]
-static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
+static GLOBAL: mimalloc_safe::MiMalloc = mimalloc_safe::MiMalloc;
 
 pub struct ArchiveSource {
   inner: Either4<
@@ -44,7 +41,7 @@ impl Read for FileOrBuffer {
 }
 
 impl ArchiveSource {
-  fn from_node_input(input: Either<String, JsBuffer>) -> Result<Self, napi::Error> {
+  fn from_node_input(input: Either<String, &[u8]>) -> Result<Self, napi::Error> {
     match input {
       Either::A(path) => match infer::get_from_path(&path)?.map(|s| s.extension()) {
         Some("tar") => {
@@ -76,41 +73,37 @@ impl ArchiveSource {
         }
         _ => Err(napi::Error::new(
           napi::Status::InvalidArg,
-          format!("Unsupported file type for {}", path),
+          format!("Unsupported file type for {path}"),
         )),
       },
-      Either::B(buffer) => {
-        let value = buffer.into_value()?;
-        match infer::get(value.as_ref()).map(|s| s.extension()) {
-          Some("tar") => Ok(Self {
-            inner: Either4::B(Cursor::new(value.to_vec())),
-          }),
-          Some("bz2") => {
-            let bz2 =
-              bzip2::read::BzDecoder::new(FileOrBuffer::Buffer(Cursor::new(value.to_vec())));
-            Ok(Self {
-              inner: Either4::D(bz2),
-            })
-          }
-          Some("xz") => {
-            let mut input = value.as_ref();
-            let mut output = Vec::new();
-            lzma_rs::xz_decompress(&mut input, &mut output).map_err(anyhow::Error::from)?;
-            Ok(Self {
-              inner: Either4::B(Cursor::new(output)),
-            })
-          }
-          Some("gz") => Ok(Self {
-            inner: Either4::C(flate2::read::GzDecoder::new(FileOrBuffer::Buffer(
-              Cursor::new(value.to_vec()),
-            ))),
-          }),
-          _ => Err(napi::Error::new(
-            napi::Status::InvalidArg,
-            "Unsupported file type for input ",
-          )),
+      Either::B(buffer) => match infer::get(buffer).map(|s| s.extension()) {
+        Some("tar") => Ok(Self {
+          inner: Either4::B(Cursor::new(buffer.to_vec())),
+        }),
+        Some("bz2") => {
+          let bz2 = bzip2::read::BzDecoder::new(FileOrBuffer::Buffer(Cursor::new(buffer.to_vec())));
+          Ok(Self {
+            inner: Either4::D(bz2),
+          })
         }
-      }
+        Some("xz") => {
+          let mut input = buffer;
+          let mut output = Vec::new();
+          lzma_rs::xz_decompress(&mut input, &mut output).map_err(anyhow::Error::from)?;
+          Ok(Self {
+            inner: Either4::B(Cursor::new(output)),
+          })
+        }
+        Some("gz") => Ok(Self {
+          inner: Either4::C(flate2::read::GzDecoder::new(FileOrBuffer::Buffer(
+            Cursor::new(buffer.to_vec()),
+          ))),
+        }),
+        _ => Err(napi::Error::new(
+          napi::Status::InvalidArg,
+          "Unsupported file type for input ",
+        )),
+      },
     }
   }
 }
@@ -135,7 +128,7 @@ pub struct Archive {
 impl Archive {
   #[napi(constructor)]
   /// Create a new archive with the underlying path.
-  pub fn new(input: Either<String, JsBuffer>) -> napi::Result<Self> {
+  pub fn new(input: Either<String, &[u8]>) -> napi::Result<Self> {
     Ok(Self {
       inner: tar::Archive::new(ArchiveSource::from_node_input(input)?),
     })

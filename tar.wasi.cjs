@@ -9,9 +9,9 @@ const { WASI: __nodeWASI } = require('node:wasi')
 const { Worker } = require('node:worker_threads')
 
 const {
-  instantiateNapiModuleSync: __emnapiInstantiateNapiModuleSync,
-  getDefaultContext: __emnapiGetDefaultContext,
   createOnMessage: __wasmCreateOnMessageForFsProxy,
+  getDefaultContext: __emnapiGetDefaultContext,
+  instantiateNapiModuleSync: __emnapiInstantiateNapiModuleSync,
 } = require('@napi-rs/wasm-runtime')
 
 const __rootDir = __nodePath.parse(process.cwd()).root
@@ -56,14 +56,37 @@ const { instance: __napiInstance, module: __wasiModule, napiModule: __napiModule
       return 4
     }
   })(),
+  reuseWorker: true,
   wasi: __wasi,
   onCreateWorker() {
     const worker = new Worker(__nodePath.join(__dirname, 'wasi-worker.mjs'), {
       env: process.env,
-      execArgv: ['--experimental-wasi-unstable-preview1'],
     })
     worker.onmessage = ({ data }) => {
       __wasmCreateOnMessageForFsProxy(__nodeFs)(data)
+    }
+
+    // The main thread of Node.js waits for all the active handles before exiting.
+    // But Rust threads are never waited without `thread::join`.
+    // So here we hack the code of Node.js to prevent the workers from being referenced (active).
+    // According to https://github.com/nodejs/node/blob/19e0d472728c79d418b74bddff588bea70a403d0/lib/internal/worker.js#L415,
+    // a worker is consist of two handles: kPublicPort and kHandle.
+    {
+      const kPublicPort = Object.getOwnPropertySymbols(worker).find(s =>
+        s.toString().includes("kPublicPort")
+      );
+      if (kPublicPort) {
+        worker[kPublicPort].ref = () => {};
+      }
+
+      const kHandle = Object.getOwnPropertySymbols(worker).find(s =>
+        s.toString().includes("kHandle")
+      );
+      if (kHandle) {
+        worker[kHandle].ref = () => {};
+      }
+
+      worker.unref();
     }
     return worker
   },
@@ -77,23 +100,14 @@ const { instance: __napiInstance, module: __wasiModule, napiModule: __napiModule
     return importObject
   },
   beforeInit({ instance }) {
-    __napi_rs_initialize_modules(instance)
-  }
+    for (const name of Object.keys(instance.exports)) {
+      if (name.startsWith('__napi_register__')) {
+        instance.exports[name]()
+      }
+    }
+  },
 })
-
-function __napi_rs_initialize_modules(__napiInstance) {
-  __napiInstance.exports['__napi_register__Entries_struct_0']?.()
-  __napiInstance.exports['__napi_register__Entries_impl_1']?.()
-  __napiInstance.exports['__napi_register__Entry_struct_2']?.()
-  __napiInstance.exports['__napi_register__Entry_impl_5']?.()
-  __napiInstance.exports['__napi_register__EntryType_6']?.()
-  __napiInstance.exports['__napi_register__Header_struct_7']?.()
-  __napiInstance.exports['__napi_register__Header_impl_37']?.()
-  __napiInstance.exports['__napi_register__ReadonlyHeader_struct_38']?.()
-  __napiInstance.exports['__napi_register__ReadonlyHeader_impl_54']?.()
-  __napiInstance.exports['__napi_register__Archive_struct_55']?.()
-  __napiInstance.exports['__napi_register__Archive_impl_66']?.()
-}
+module.exports = __napiModule.exports
 module.exports.Archive = __napiModule.exports.Archive
 module.exports.Entries = __napiModule.exports.Entries
 module.exports.Entry = __napiModule.exports.Entry
