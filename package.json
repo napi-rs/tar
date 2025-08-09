@@ -64,7 +64,7 @@
   "devDependencies": {
     "@napi-rs/cli": "^3.0.1",
     "@napi-rs/lzma": "^1.4.3",
-    "@oxc-node/core": "^0.0.30",
+    "@oxc-node/core": "^0.0.32",
     "@taplo/cli": "^0.7.0",
     "@types/node": "^24.1.0",
     "@types/tar": "^6",
