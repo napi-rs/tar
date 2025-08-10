@@ -1,3 +1,5 @@
+use std::io::Read;
+
 use napi::{
   bindgen_prelude::{Env, Reference, SharedReference},
   iterator::Generator,
@@ -57,5 +59,19 @@ impl Entry {
     Ok(ReadonlyHeader::new(
       this.share_with(env, |e| Ok(e.inner.header()))?,
     ))
+  }
+
+  #[napi]
+  /// Read the entirety of this entry into a byte vector.
+  ///
+  /// This is equivalent to the functionality provided by `tar -x -O -f archive.tar filename`
+  /// which extracts a single file and outputs its contents to stdout.
+  ///
+  /// This method will read the entire contents of this entry into memory.
+  /// For large files, consider using streaming methods if memory usage is a concern.
+  pub fn as_bytes(&mut self) -> napi::Result<napi::bindgen_prelude::Buffer> {
+    let mut data = Vec::new();
+    self.inner.read_to_end(&mut data)?;
+    Ok(data.into())
   }
 }
