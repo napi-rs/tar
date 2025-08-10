@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
+    "target": "es2022",
     "strict": true,
-    "moduleResolution": "node",
-    "module": "CommonJS",
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "esModuleInterop": true,
+    "lib": ["ESNext"],
     "allowSyntheticDefaultImports": true
   },
   "include": ["."],

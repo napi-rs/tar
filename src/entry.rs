@@ -1,6 +1,7 @@
-use napi::bindgen_prelude::Reference;
-use napi::Env;
-use napi::{bindgen_prelude::SharedReference, iterator::Generator};
+use napi::{
+  bindgen_prelude::{Env, Reference, SharedReference},
+  iterator::Generator,
+};
 use napi_derive::napi;
 
 use crate::header::ReadonlyHeader;
