@@ -73,8 +73,16 @@ export declare class Archive {
   setIgnoreZeros(ignoreZeros: boolean): void
 }
 
-export declare class Entries {
-  [Symbol.iterator](): Iterator<Entry, void, void>
+/**
+ * This type extends JavaScript's `Iterator`, and so has the iterator helper
+ * methods. It may extend the upcoming TypeScript `Iterator` class in the future.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator#iterator_helper_methods
+ * @see https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-6.html#iterator-helper-methods
+ */
+export declare class Entries extends Iterator<Entry, void, void> {
+
+  next(value?: void): IteratorResult<Entry, void>
 }
 
 export declare class Entry {
