@@ -1,6 +1,6 @@
 use napi::{
-  bindgen_prelude::{BigInt, Buffer, SharedReference},
   Either, Result,
+  bindgen_prelude::{BigInt, Buffer, SharedReference},
 };
 use napi_derive::napi;
 
