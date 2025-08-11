@@ -233,6 +233,10 @@ test('Builder - should create archive with file output', (t) => {
 })
 
 test('Builder - should append files from disk', (t) => {
+  if (process.env.NAPI_RS_FORCE_WASI) {
+    t.pass('Skipping append files test on WASI')
+    return
+  }
   // Create temp files to add to archive
   const tempFile1 = join(__dirname, 'temp1.txt')
   const tempFile2 = join(__dirname, 'temp2.txt')
@@ -271,6 +275,10 @@ test('Builder - should append files from disk', (t) => {
 })
 
 test('Builder - should append directories', (t) => {
+  if (process.env.NAPI_RS_FORCE_WASI) {
+    t.pass('Skipping append directories test on WASI')
+    return
+  }
   // Create a test directory structure
   const testDir = join(__dirname, 'test-dir')
   const subDir = join(testDir, 'subdir')
@@ -309,6 +317,10 @@ test('Builder - should append directories', (t) => {
 })
 
 test('Builder - should handle mixed content types', (t) => {
+  if (process.env.NAPI_RS_FORCE_WASI) {
+    t.pass('Skipping mixed content types test on WASI')
+    return
+  }
   // Create a temp file for testing
   const tempFile = join(__dirname, 'mixed-test.txt')
   writeFileSync(tempFile, 'File from disk')

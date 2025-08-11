@@ -318,7 +318,7 @@ impl Builder {
     // We need to replace the inner builder to be able to consume it
     let dummy_output = BuilderOutput::Buffer(Cursor::new(Vec::new()));
     let builder = std::mem::replace(&mut self.inner, tar::Builder::new(dummy_output));
-    
+
     let inner = builder.into_inner()?;
     match inner {
       BuilderOutput::File(_) => {
