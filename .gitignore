@@ -131,3 +131,9 @@ Cargo.lock
 x86_64-unknown-linux-gnu
 *.wasm
 /npm
+
+# Test output files
+__test__/*.tar
+__test__/test-*
+__test__/temp*
+__test__/mixed-*

@@ -2,7 +2,7 @@
 
 use std::{
   fs::File,
-  io::{BufReader, Cursor, Read},
+  io::{BufReader, Cursor, Read, Write},
 };
 
 use napi::bindgen_prelude::{Either, Either4, Env, Reference};
@@ -225,5 +225,110 @@ impl Archive {
   /// This can be used in case multiple tar archives have been concatenated together.
   pub fn set_ignore_zeros(&mut self, ignore_zeros: bool) {
     self.inner.set_ignore_zeros(ignore_zeros);
+  }
+}
+
+pub enum BuilderOutput {
+  File(File),
+  Buffer(Cursor<Vec<u8>>),
+}
+
+impl Write for BuilderOutput {
+  fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
+    match self {
+      Self::File(file) => file.write(buf),
+      Self::Buffer(buffer) => buffer.write(buf),
+    }
+  }
+
+  fn flush(&mut self) -> std::io::Result<()> {
+    match self {
+      Self::File(file) => file.flush(),
+      Self::Buffer(buffer) => buffer.flush(),
+    }
+  }
+}
+
+#[napi]
+pub struct Builder {
+  inner: tar::Builder<BuilderOutput>,
+}
+
+#[napi]
+impl Builder {
+  #[napi(constructor)]
+  /// Create a new builder which will write to the specified output.
+  /// The output can be a file path (string) or will create a buffer internally.
+  pub fn new(output: Option<String>) -> napi::Result<Self> {
+    let builder_output = match output {
+      Some(path) => BuilderOutput::File(File::create(path)?),
+      None => BuilderOutput::Buffer(Cursor::new(Vec::new())),
+    };
+
+    Ok(Self {
+      inner: tar::Builder::new(builder_output),
+    })
+  }
+
+  #[napi]
+  /// Append a file from disk to this archive.
+  ///
+  /// This function will open the file specified by `src` and add it to the
+  /// archive as `name`. The `name` specified is the name that will be used
+  /// inside the archive.
+  pub fn append_file(&mut self, name: String, src: String) -> napi::Result<()> {
+    let mut file = File::open(src)?;
+    self.inner.append_file(name, &mut file)?;
+    Ok(())
+  }
+
+  #[napi]
+  /// Append a directory and all of its contents to this archive.
+  ///
+  /// This function will recursively add all files and directories in the
+  /// specified `src` directory to the archive, preserving their relative
+  /// paths under `name`.
+  pub fn append_dir_all(&mut self, name: String, src: String) -> napi::Result<()> {
+    self.inner.append_dir_all(name, src)?;
+    Ok(())
+  }
+
+  #[napi]
+  /// Append raw data to this archive with the specified name.
+  ///
+  /// This function allows you to add arbitrary data to the archive with a
+  /// specified filename.
+  pub fn append_data(&mut self, name: String, data: &[u8]) -> napi::Result<()> {
+    let mut header = tar::Header::new_gnu();
+    header.set_size(data.len() as u64);
+    header.set_path(&name)?;
+    header.set_cksum();
+    self.inner.append_data(&mut header, name, data)?;
+    Ok(())
+  }
+
+  #[napi]
+  /// Finalize the archive and return the resulting data.
+  ///
+  /// This function must be called to properly finish the archive.
+  /// If a file path was provided during construction, this will flush
+  /// and close the file. If no path was provided, this returns the
+  /// archive data as a Buffer.
+  pub fn finish(&mut self) -> napi::Result<Option<Vec<u8>>> {
+    // We need to replace the inner builder to be able to consume it
+    let dummy_output = BuilderOutput::Buffer(Cursor::new(Vec::new()));
+    let builder = std::mem::replace(&mut self.inner, tar::Builder::new(dummy_output));
+
+    let inner = builder.into_inner()?;
+    match inner {
+      BuilderOutput::File(_) => {
+        // File-based output, nothing to return
+        Ok(None)
+      }
+      BuilderOutput::Buffer(cursor) => {
+        // Buffer-based output, return the data
+        Ok(Some(cursor.into_inner()))
+      }
+    }
   }
 }

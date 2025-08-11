@@ -8,6 +8,8 @@
 
 ## Usage
 
+### Reading Archives
+
 ```ts
 export class Entries {
   [Symbol.iterator](): Iterator<Entry, void, void>
@@ -33,6 +35,43 @@ export class Archive {
    */
   unpack(to: string): void
 }
+```
+
+### Creating Archives
+
+```ts
+export class Builder {
+  /** Create a new builder which will write to the specified output. */
+  constructor(output?: string)
+  /** Append a file from disk to this archive. */
+  appendFile(name: string, src: string): void
+  /** Append a directory and all of its contents to this archive. */
+  appendDirAll(name: string, src: string): void
+  /** Append raw data to this archive with the specified name. */
+  appendData(name: string, data: Uint8Array): void
+  /** Finalize the archive and return the resulting data. */
+  finish(): Array<number> | null
+}
+```
+
+### Creating Archives Example
+
+```ts
+import { Builder } from '@napi-rs/tar'
+
+// Create archive in memory
+const builder = new Builder()
+builder.appendData('hello.txt', Buffer.from('Hello, world!'))
+builder.appendFile('package.json', './package.json')
+builder.appendDirAll('src', './src')
+
+const archiveData = builder.finish() // Returns Uint8Array
+// archiveData can be written to disk or used directly
+
+// Create archive to file
+const fileBuilder = new Builder('./output.tar')
+fileBuilder.appendData('readme.txt', Buffer.from('Archive contents'))
+fileBuilder.finish() // Returns null, data written to ./output.tar
 ```
 
 ## Extract Single File
