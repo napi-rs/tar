@@ -14,6 +14,7 @@ export class Entries {
 }
 export class Entry {
   path(): string | null
+  asBytes(): Buffer
 }
 export class Archive {
   /** Create a new archive with the underlying path. */
@@ -31,6 +32,32 @@ export class Archive {
    * a '..' in their path are skipped during the unpacking process.
    */
   unpack(to: string): void
+}
+```
+
+## Extract Single File
+
+You can extract a specific file from a tar archive without extracting the entire archive. This is useful for inspecting Docker OCI images or extracting specific configuration files:
+
+```ts
+import { Archive } from '@napi-rs/tar'
+
+// Extract a single file (similar to: tar -x -O -f archive.tar filename)
+function extractFile(archivePath: string, targetPath: string): Buffer | null {
+  const archive = new Archive(archivePath)
+  for (const entry of archive.entries()) {
+    if (entry.path() === targetPath) {
+      return entry.asBytes()
+    }
+  }
+  return null
+}
+
+// Usage example
+const indexContent = extractFile('./docker-image.tar', 'index.json')
+if (indexContent) {
+  const manifest = JSON.parse(indexContent.toString('utf-8'))
+  console.log(manifest)
 }
 ```
 

@@ -102,6 +102,16 @@ export declare class Entry {
    */
   path(): string | null
   header(): ReadonlyHeader
+  /**
+   * Read the entirety of this entry into a byte vector.
+   *
+   * This is equivalent to the functionality provided by `tar -x -O -f archive.tar filename`
+   * which extracts a single file and outputs its contents to stdout.
+   *
+   * This method will read the entire contents of this entry into memory.
+   * For large files, consider using streaming methods if memory usage is a concern.
+   */
+  asBytes(): Buffer
 }
 
 export declare class Header {
