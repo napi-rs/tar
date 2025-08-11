@@ -57,6 +57,7 @@ const {
 })
 export default __napiModule.exports
 export const Archive = __napiModule.exports.Archive
+export const Builder = __napiModule.exports.Builder
 export const Entries = __napiModule.exports.Entries
 export const Entry = __napiModule.exports.Entry
 export const Header = __napiModule.exports.Header

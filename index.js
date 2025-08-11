@@ -509,6 +509,7 @@ if (!nativeBinding) {
 
 module.exports = nativeBinding
 module.exports.Archive = nativeBinding.Archive
+module.exports.Builder = nativeBinding.Builder
 module.exports.Entries = nativeBinding.Entries
 module.exports.Entry = nativeBinding.Entry
 module.exports.Header = nativeBinding.Header

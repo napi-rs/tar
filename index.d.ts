@@ -73,6 +73,46 @@ export declare class Archive {
   setIgnoreZeros(ignoreZeros: boolean): void
 }
 
+export declare class Builder {
+  /**
+   * Create a new builder which will write to the specified output.
+   * The output can be a file path (string) or will create a buffer internally.
+   */
+  constructor(output?: string | undefined | null)
+  /**
+   * Append a file from disk to this archive.
+   *
+   * This function will open the file specified by `src` and add it to the
+   * archive as `name`. The `name` specified is the name that will be used
+   * inside the archive.
+   */
+  appendFile(name: string, src: string): void
+  /**
+   * Append a directory and all of its contents to this archive.
+   *
+   * This function will recursively add all files and directories in the
+   * specified `src` directory to the archive, preserving their relative
+   * paths under `name`.
+   */
+  appendDirAll(name: string, src: string): void
+  /**
+   * Append raw data to this archive with the specified name.
+   *
+   * This function allows you to add arbitrary data to the archive with a
+   * specified filename.
+   */
+  appendData(name: string, data: Uint8Array): void
+  /**
+   * Finalize the archive and return the resulting data.
+   *
+   * This function must be called to properly finish the archive.
+   * If a file path was provided during construction, this will flush
+   * and close the file. If no path was provided, this returns the
+   * archive data as a Buffer.
+   */
+  finish(): Array<number> | null
+}
+
 /**
  * This type extends JavaScript's `Iterator`, and so has the iterator helper
  * methods. It may extend the upcoming TypeScript `Iterator` class in the future.
