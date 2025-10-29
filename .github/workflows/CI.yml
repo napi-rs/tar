@@ -29,7 +29,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: 'yarn'
 
       - name: Install
@@ -132,7 +132,7 @@ jobs:
         uses: actions/setup-node@v6
         if: ${{ !matrix.settings.docker }}
         with:
-          node-version: 22
+          node-version: 24
           cache: yarn
       - name: Download tar.node
         if: ${{ matrix.settings.host == 'ubuntu-latest' }}
@@ -412,7 +412,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: yarn
       - name: Install dependencies
         run: yarn install
