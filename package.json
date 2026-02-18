@@ -68,7 +68,7 @@
     "@oxc-node/core": "^0.0.35",
     "@taplo/cli": "^0.7.0",
     "@types/node": "^24.2.1",
-    "@types/tar": "^6",
+    "@types/tar": "^7.0.0",
     "ava": "^6.4.1",
     "chalk": "^5.5.0",
     "husky": "^9.1.7",
