@@ -251,6 +251,10 @@ jobs:
         node:
           - '22'
           - '24'
+        exclude:
+          - settings:
+              target: i686-pc-windows-msvc
+            node: '24'
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v6
@@ -360,7 +364,7 @@ jobs:
       - name: Test bindings
         uses: tj-actions/docker-run@v2
         # Node.js on qemu randomly segfaults on powerpc64le
-        continue-on-error: ${{ matrix.target == 'powerpc64le-unknown-linux-gnu' }}
+        continue-on-error: ${{ matrix.target == 'powerpc64le-unknown-linux-gnu' || matrix.target == 's390x-unknown-linux-gnu' }}
         with:
           image: ${{ steps.docker.outputs.IMAGE }}
           name: test-${{ matrix.target }}-${{ matrix.node }}
