@@ -124,7 +124,7 @@ jobs:
               export WASI_SDK_PATH="$(pwd)/wasi-sdk-33.0-x86_64-linux"
               yarn build --target wasm32-wasip1-threads
               rm tar.linux-x64-gnu.node
-    name: stable - ${{ matrix.settings.target }} - node@22
+    name: stable - ${{ matrix.settings.target }} - node@24
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v7
