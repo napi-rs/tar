@@ -80,7 +80,7 @@
     "prettier": "^3.9.5",
     "tar": "^7.5.20",
     "tinybench": "^6.0.2",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.0"
   },
   "lint-staged": {
     "*.@(js|ts|tsx)": [
