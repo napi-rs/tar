@@ -59,6 +59,7 @@
     "lint": "oxlint .",
     "prepublishOnly": "napi pre-publish -t npm",
     "test": "ava",
+    "preversion": "napi build --platform && git add .",
     "version": "napi version"
   },
   "devDependencies": {
