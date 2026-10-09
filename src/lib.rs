@@ -152,7 +152,13 @@ impl Archive {
   /// outside of the path specified by `dst`. Files in the archive which have
   /// a '..' in their path are skipped during the unpacking process.
   pub fn unpack(&mut self, to: String) -> napi::Result<()> {
-    self.inner.unpack(to)?;
+    // Resolve `to` to an absolute, canonical path before handing it to the
+    // underlying `tar` crate. This ensures the containment checks performed
+    // during extraction are evaluated against the real destination
+    // directory, rather than a possibly relative or symlinked path.
+    std::fs::create_dir_all(&to)?;
+    let canonical_to = std::fs::canonicalize(&to)?;
+    self.inner.unpack(&canonical_to)?;
     Ok(())
   }
 
