@@ -635,7 +635,7 @@ __metadata:
     "@types/node": "npm:^26.1.1"
     "@types/tar": "npm:^7.0.87"
     ava: "npm:^8.0.1"
-    chalk: "npm:^5.6.2"
+    chalk: "npm:^6.0.0"
     emnapi: "npm:2.0.0-alpha.6"
     husky: "npm:^9.1.7"
     lint-staged: "npm:^17.0.8"
@@ -1743,6 +1743,13 @@ __metadata:
   version: 5.6.2
   resolution: "chalk@npm:5.6.2"
   checksum: 10c0/99a4b0f0e7991796b1e7e3f52dceb9137cae2a9dfc8fc0784a550dc4c558e15ab32ed70b14b21b52beb2679b4892b41a0aa44249bcb996f01e125d58477c6976
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^6.0.0":
+  version: 6.0.1
+  resolution: "chalk@npm:6.0.1"
+  checksum: 10c0/4c58238fa874f531b5201bf99ebd374742be31f8e306c7783d930856aec305f2dea3e07531a8805b2a7ba92807296e39ced52e9f673703e0264d96e83998a429
   languageName: node
   linkType: hard
 
