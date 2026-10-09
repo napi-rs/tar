@@ -81,6 +81,7 @@ jobs:
           - host: ubuntu-latest
             target: armv7-unknown-linux-gnueabihf
             build: |
+              export TARGET_CFLAGS="--target=armv7-unknown-linux-gnueabihf"
               TARGET_CC=clang yarn build --target armv7-unknown-linux-gnueabihf --use-napi-cross
               rm tar.linux-x64-gnu.node
           - host: ubuntu-latest
