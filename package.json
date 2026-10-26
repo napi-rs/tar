@@ -68,7 +68,7 @@
     "@napi-rs/cli": "^3.10.8",
     "@napi-rs/lzma": "^1.4.5",
     "@napi-rs/wasm-runtime": "^1.2.5",
-    "@oxc-node/core": "^0.1.0",
+    "@oxc-node/core": "^1.0.0",
     "@taplo/cli": "^0.7.0",
     "@types/node": "^26.1.1",
     "@types/tar": "^7.0.87",
