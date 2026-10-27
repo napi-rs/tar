@@ -22,13 +22,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emnapi/core@npm:2.0.0-alpha.6":
-  version: 2.0.0-alpha.6
-  resolution: "@emnapi/core@npm:2.0.0-alpha.6"
+"@emnapi/core@npm:2.0.0-beta.2":
+  version: 2.0.0-beta.2
+  resolution: "@emnapi/core@npm:2.0.0-beta.2"
   dependencies:
     "@emnapi/wasi-threads": "npm:2.2.0"
     tslib: "npm:^2.4.0"
-  checksum: 10c0/6ab106998f4515a660ea8adb217cfb3ca7c851914e3e2bb1e58aecb2824355bb6003f1aa58f8680f5845616c381972fa012bd6003e2a4c956ea83b06fd9aa3fd
+  checksum: 10c0/b59f3f2ac95a6d32b45d4fa030834bdf388700bed6ef024707da1ed0489af10d98b94afce86c1033a270b4e9a71b1ff72fec0e5620ffcff1248a2b203edcd057
   languageName: node
   linkType: hard
 
@@ -41,12 +41,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emnapi/runtime@npm:2.0.0-alpha.6":
-  version: 2.0.0-alpha.6
-  resolution: "@emnapi/runtime@npm:2.0.0-alpha.6"
+"@emnapi/runtime@npm:2.0.0-beta.2":
+  version: 2.0.0-beta.2
+  resolution: "@emnapi/runtime@npm:2.0.0-beta.2"
   dependencies:
     tslib: "npm:^2.4.0"
-  checksum: 10c0/518e6b5de14b005cab96eeb9ecc6798e5ec62ebab0507cee5d3acc781d0d466c93bdad3779b0e05d3fc4dc702505165ae1c19e05cd717f159f48a93ee39ad919
+  checksum: 10c0/d50727fb82133a273569aec52a0b30bf6483eb081d88c16a8bf19860b2214e24cec8e19cdea150601e098c2e695bd1e3b34569b828ae956ca71cb67580e63f9b
   languageName: node
   linkType: hard
 
@@ -597,8 +597,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@napi-rs/tar@workspace:."
   dependencies:
-    "@emnapi/core": "npm:2.0.0-alpha.6"
-    "@emnapi/runtime": "npm:2.0.0-alpha.6"
+    "@emnapi/core": "npm:2.0.0-beta.2"
+    "@emnapi/runtime": "npm:2.0.0-beta.2"
     "@napi-rs/cli": "npm:^3.10.8"
     "@napi-rs/lzma": "npm:^1.4.5"
     "@napi-rs/wasm-runtime": "npm:^1.2.5"
@@ -608,7 +608,7 @@ __metadata:
     "@types/tar": "npm:^7.0.87"
     ava: "npm:^8.0.1"
     chalk: "npm:^6.0.0"
-    emnapi: "npm:2.0.0-alpha.6"
+    emnapi: "npm:2.0.0-beta.2"
     husky: "npm:^9.1.7"
     lint-staged: "npm:^17.0.8"
     npm-run-all2: "npm:^9.0.2"
@@ -1919,15 +1919,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emnapi@npm:2.0.0-alpha.6":
-  version: 2.0.0-alpha.6
-  resolution: "emnapi@npm:2.0.0-alpha.6"
+"emnapi@npm:2.0.0-beta.2":
+  version: 2.0.0-beta.2
+  resolution: "emnapi@npm:2.0.0-beta.2"
   peerDependencies:
     node-addon-api: ">= 6.1.0"
   peerDependenciesMeta:
     node-addon-api:
       optional: true
-  checksum: 10c0/9480bc25c66e4edcca59aa19f755677af7ac317d9c0fcfc11fc6a79e3fa91c3f987e6eb0694ace1112d56170c04f8aff5c21af0167e0db60c744aba739b1eada
+  checksum: 10c0/36e13e632595b530a6c5ec8614177a7bbe3667fc0ec67dc284251a875442c095d5411cea76ce5076e0834d2af6447b72a047813d9e14a30f1846ece76997985a
   languageName: node
   linkType: hard
 
