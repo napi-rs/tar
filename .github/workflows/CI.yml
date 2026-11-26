@@ -183,10 +183,12 @@ jobs:
   build-freebsd:
     runs-on: ubuntu-latest
     name: Build FreeBSD
+    defaults:
+      run:
+        shell: cpa.sh {0}
     steps:
       - uses: actions/checkout@v7
-      - name: Build
-        id: build
+      - name: Start VM
         uses: cross-platform-actions/action@v1.8.0
         env:
           DEBUG: napi:*
@@ -198,29 +200,30 @@ jobs:
           cpu_count: 3
           environment_variables: DEBUG RUSTUP_IO_THREADS
           shell: bash
-          run: |
-            sudo pkg install -y -f curl node libnghttp2 npm cmake
-            sudo npm install -g yarn --ignore-scripts
-            curl https://sh.rustup.rs -sSf --output rustup.sh
-            sh rustup.sh -y --profile minimal --default-toolchain beta
-            source "$HOME/.cargo/env"
-            echo "~~~~ rustc --version ~~~~"
-            rustc --version
-            echo "~~~~ node -v ~~~~"
-            node -v
-            echo "~~~~ yarn --version ~~~~"
-            yarn --version
-            pwd
-            ls -lah
-            whoami
-            env
-            freebsd-version
-            yarn install
-            yarn build
-            yarn test
-            rm -rf node_modules
-            rm -rf target
-            rm -rf .yarn/cache
+      - name: Build
+        run: |
+          sudo pkg install -y -f curl node libnghttp2 npm cmake-core
+          sudo npm install -g yarn --ignore-scripts
+          curl https://sh.rustup.rs -sSf --output rustup.sh
+          sh rustup.sh -y --profile minimal --default-toolchain beta
+          source "$HOME/.cargo/env"
+          echo "~~~~ rustc --version ~~~~"
+          rustc --version
+          echo "~~~~ node -v ~~~~"
+          node -v
+          echo "~~~~ yarn --version ~~~~"
+          yarn --version
+          pwd
+          ls -lah
+          whoami
+          env
+          freebsd-version
+          yarn install
+          yarn build
+          yarn test
+          rm -rf node_modules
+          rm -rf target
+          rm -rf .yarn/cache
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
