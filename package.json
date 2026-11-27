@@ -63,8 +63,8 @@
     "version": "napi version"
   },
   "devDependencies": {
-    "@emnapi/core": "2.0.0-beta.4",
-    "@emnapi/runtime": "2.0.0-beta.4",
+    "@emnapi/core": "2.0.0-beta.5",
+    "@emnapi/runtime": "2.0.0-beta.5",
     "@napi-rs/cli": "^3.10.11",
     "@napi-rs/lzma": "^1.5.3",
     "@napi-rs/wasm-runtime": "^1.2.7",
@@ -74,7 +74,7 @@
     "@types/tar": "^7.0.87",
     "ava": "^8.3.0",
     "chalk": "^6.0.1",
-    "emnapi": "2.0.0-beta.4",
+    "emnapi": "2.0.0-beta.5",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
     "npm-run-all2": "^9.0.4",
